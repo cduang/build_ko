@@ -1,0 +1,42 @@
+container:
+    image: ubuntu:latest
+    cpu: 8
+    memory: 8
+
+env:
+    CIRRUS_CLONE_DEPTH: 100
+    LC_ALL: en_US.UTF-8
+
+build_kernel_task:
+  name: Build Kernel
+  install_script: |
+    apt update -y
+    apt install -y rsync gcc-arm-linux-gnueabi binutils make python3 libssl-dev build-essential bc  bison flex unzip libssl-dev ca-certificates xz-utils mkbootimg cpio device-tree-compiler git git-lfs libxml2
+    ln -s /usr/bin/python3 /usr/bin/python
+    git clone https://github.com/tiann/KernelSU.git
+    git clone https://gerrit.googlesource.com/git-repo
+    mkdir android-kernel && cd android-kernel
+    chmod +x ../init_repo.sh
+    bash ../init_repo.sh
+    ../git-repo/repo sync -j$(nproc --all)
+    echo "[+] KernelSU setup"
+    GKI_ROOT=$(pwd)
+    echo "[+] GKI_ROOT: $GKI_ROOT"
+    echo "[+] Copy kernel su driver to $GKI_ROOT/common/drivers"
+    cp -r ../mod4 $GKI_ROOT/common/drivers/qaq
+    cp -r ../KernelSU/kernel $GKI_ROOT/common/drivers/kernelsu
+    echo "[+] Add kernel su driver to Makefile"
+    DRIVER_MAKEFILE=$GKI_ROOT/common/drivers/Makefile
+    echo "obj-y += qaq/" >> $DRIVER_MAKEFILE
+    grep -q "kernelsu" $DRIVER_MAKEFILE || echo "obj-y += kernelsu/" >> $DRIVER_MAKEFILE
+    echo "[+] KernelSU setup Done."
+    cd -
+
+  start_build_script: |
+    cd android-kernel
+    LTO=thin BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh
+    cd -
+  always:
+    output_artifacts:
+      path: "./android-kernel/out/*/common/drivers/qaq/XY.ko"
+  
