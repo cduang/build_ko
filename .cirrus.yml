@@ -29,7 +29,7 @@ build_kernel_task:
     DRIVER_MAKEFILE=$GKI_ROOT/common/drivers/Makefile
     echo "obj-y += qaq/" >> $DRIVER_MAKEFILE
     grep -q "kernelsu" $DRIVER_MAKEFILE || echo "obj-y += kernelsu/" >> $DRIVER_MAKEFILE
-    echo "[+] KernelSU setup Done."
+    echo "[+] KernelSU setup Done. "
     cd -
 
   start_build_script: |
