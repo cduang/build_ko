@@ -23,7 +23,7 @@ build_kernel_task:
     GKI_ROOT=$(pwd)
     echo "[+] GKI_ROOT: $GKI_ROOT"
     echo "[+] Copy kernel su driver to $GKI_ROOT/common/drivers"
-    cp -r ../mod4 $GKI_ROOT/common/drivers/qaq
+    cp -r ../dxc $GKI_ROOT/common/drivers/qaq
     cp -r ../KernelSU/kernel $GKI_ROOT/common/drivers/kernelsu
     echo "[+] Add kernel su driver to Makefile"
     DRIVER_MAKEFILE=$GKI_ROOT/common/drivers/Makefile
@@ -38,5 +38,5 @@ build_kernel_task:
     cd -
   always:
     output_artifacts:
-      path: "./android-kernel/out/*/common/drivers/qaq/XY.ko"
+      path: "./android-kernel/out/*/common/drivers/qaq/dmz1.ko"
   
