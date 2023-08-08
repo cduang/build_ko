@@ -1,7 +1,7 @@
 container:
     image: ubuntu:latest
-    cpu: 10
-    memory: 8
+    cpu: 8
+    memory: 16
 
 env:
     CIRRUS_CLONE_DEPTH: 100
