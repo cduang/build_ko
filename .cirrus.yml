@@ -1,11 +1,10 @@
 container:
     image: ubuntu:latest
-    cpu: 8
+    cpu: 16
     memory: 8
 
 env:
     CIRRUS_CLONE_DEPTH: 100
-    LC_ALL: en_US.UTF-8
 
 build_kernel_task:
   name: Build Kernel
