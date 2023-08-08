@@ -1,6 +1,6 @@
 container:
     image: ubuntu:latest
-    cpu: 12
+    cpu: 10
     memory: 8
 
 env:
