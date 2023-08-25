@@ -5,6 +5,8 @@ container:
 
 env:
     CIRRUS_CLONE_DEPTH: 100
+    LC_CTYPE: en_US.UTF-8
+    LC_ALL: en_US.UTF-8
 
 build_kernel_task:
   name: Build Kernel
